@@ -40,7 +40,7 @@ def renderScreen():
             elif map[y][x] == "w":
                 print("██", end="")
             else:
-                print("░░", end="")
+                print("  ", end="")
         print("")
 
 renderScreen()
