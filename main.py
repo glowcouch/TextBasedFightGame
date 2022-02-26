@@ -4,6 +4,7 @@ import csv
 map = []
 
 def loadRoom(roomNumber):
+    map.clear()
     with open("Room"+str(roomNumber)+".csv", "r") as file:
         reader = csv.reader(file)
         for row in reader:
@@ -19,7 +20,7 @@ playerY = 15
 money = 0
 
 loadRoom(1)
-# map = [
+#map = [
 #     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 #     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 #     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
@@ -53,8 +54,10 @@ def renderScreen():
                 print("██", end="")
             elif map[y][x] == "c":
                 print("◉ ", end="")
-            else:
+            elif map[y][x] == " ":
                 print("  ", end="")
+            else:
+                print(" |", end="")
         print("")
 
 renderScreen()
@@ -73,7 +76,12 @@ while True:
 
     if map[playerY][playerX] == "c":
         money+=1
-        map[playerY][playerX] = ""
+        map[playerY][playerX] = " "
+    elif "d" in map[playerY][playerX]:
+        _, room, entryX, entryY = map[playerY][playerX].split(":")
+        loadRoom(room)
+        playerX = int(entryX)
+        playerY = int(entryY)
 
     if playerX > worldWidth:
         playerX = worldWidth
