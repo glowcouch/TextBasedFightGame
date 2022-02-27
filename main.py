@@ -2,6 +2,7 @@ import os
 import csv
 
 map = []
+collectedCoins = []
 
 def loadRoom(roomNumber):
     map.clear()
@@ -9,6 +10,12 @@ def loadRoom(roomNumber):
         reader = csv.reader(file)
         for row in reader:
             map.append(row)
+    for y in range(0, worldHeight):
+        for x in range(0, worldWidth):
+            if map[y][x] == "c":
+                for coin in collectedCoins:
+                    if x == coin[0] and y == coin[1]:
+                        map[y][x]=" "
 
 worldWidth = 20
 worldHeight = 20
@@ -55,6 +62,7 @@ while True:
     if map[playerY][playerX] == "c":
         money+=1
         map[playerY][playerX] = " "
+        collectedCoins.append([playerX, playerY])
     elif "d" in map[playerY][playerX]:
         _, room, entryX, entryY = map[playerY][playerX].split(":")
         loadRoom(room)
