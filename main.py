@@ -1,10 +1,21 @@
 import os
 import csv
+import pyautogui
+import threading
+
+def pressEnter():
+    while True:
+        pyautogui.press("enter")
+
+pressEnterThread = threading.Thread(target=pressEnter)
+pressEnterThread.start()
 
 map = []
 collectedCoins = []
+room = 0
 
 def loadRoom(roomNumber):
+    room = roomNumber
     map.clear()
     with open("Room"+str(roomNumber)+".csv", "r") as file:
         reader = csv.reader(file)
@@ -14,7 +25,7 @@ def loadRoom(roomNumber):
         for x in range(0, worldWidth):
             if map[y][x] == "c":
                 for coin in collectedCoins:
-                    if x == coin[0] and y == coin[1]:
+                    if x == coin[0] and y == coin[1] and room == coin[2]:
                         map[y][x] = " "
 
 worldWidth = 20
@@ -62,7 +73,7 @@ while True:
     if map[playerY][playerX] == "c":
         money+=1
         map[playerY][playerX] = " "
-        collectedCoins.append([playerX, playerY])
+        collectedCoins.append([playerX, playerY, room])
     elif "d" in map[playerY][playerX]:
         _, room, entryX, entryY = map[playerY][playerX].split(":")
         loadRoom(room)
