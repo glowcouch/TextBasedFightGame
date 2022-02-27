@@ -15,7 +15,7 @@ def loadRoom(roomNumber):
             if map[y][x] == "c":
                 for coin in collectedCoins:
                     if x == coin[0] and y == coin[1]:
-                        map[y][x]=" "
+                        map[y][x] = " "
 
 worldWidth = 20
 worldHeight = 20
