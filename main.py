@@ -1,11 +1,18 @@
 import os
 import csv
-import pyautogui
+usePyAutoGUI = input("use pyAutoGUI y/n")
+if usePyAutoGui == "y":
+    usePyAutoGui = True
+    import pyautogui
+else:
+    usePyAutoGui = False
+
 import threading
 
 def pressEnter():
     while True:
-        pyautogui.press("enter")
+        if usePyAutoGui:
+            pyautogui.press("enter")
 
 pressEnterThread = threading.Thread(target=pressEnter)
 pressEnterThread.start()
@@ -30,8 +37,6 @@ def loadRoom(roomNumber):
 
 worldWidth = 20
 worldHeight = 20
-
-print(type(worldHeight))
 
 playerX = 10
 playerY = 15
