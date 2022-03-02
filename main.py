@@ -1,7 +1,7 @@
 import os
 import csv
 usePyAutoGUI = input("use pyAutoGUI y/n")
-if usePyAutoGui == "y":
+if usePyAutoGUI == "y":
     usePyAutoGui = True
     import pyautogui
 else:
@@ -11,7 +11,7 @@ import threading
 
 def pressEnter():
     while True:
-        if usePyAutoGui:
+        if usePyAutoGUI:
             pyautogui.press("enter")
 
 pressEnterThread = threading.Thread(target=pressEnter)
