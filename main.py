@@ -19,6 +19,8 @@ pressEnterThread.start()
 
 map = []
 collectedCoins = []
+HP = 10
+maxHP=10
 room = 0
 
 def loadRoom(roomNumber):
@@ -46,7 +48,7 @@ loadRoom(1)
 
 def renderScreen():
     os.system("clear")
-    print("money: "+str(money))
+    print("money: "+str(money) + "  HP: "+str(HP))
     for y in range(0, worldHeight):
         for x in range(0, worldWidth):
             if x == playerX and y == playerY:
@@ -54,11 +56,15 @@ def renderScreen():
             elif map[y][x] == "w":
                 print("██", end="")
             elif map[y][x] == "c":
-                print("◉ ", end="")
+                print("🪙", end="")
             elif map[y][x] == " ":
                 print("  ", end="")
-            else:
-                print(" |", end="")
+            elif "d:" in map[y][x]:
+                print("🚪", end="")
+            elif "s:" in map[y][x]:
+                print("❤️", end="")
+            elif "l" in map[y][x]:
+                print("🟥", end="")
         print("")
 
 renderScreen()
@@ -79,11 +85,17 @@ while True:
         money+=1
         map[playerY][playerX] = " "
         collectedCoins.append([playerX, playerY, room])
-    elif "d" in map[playerY][playerX]:
+    elif "d:" in map[playerY][playerX]:
         _, room, entryX, entryY = map[playerY][playerX].split(":")
         loadRoom(room)
         playerX = int(entryX)
         playerY = int(entryY)
+    elif "s:" in map[playerY][playerX]:
+        if "HP+" in map[playerY][playerX] and money>=2 and HP <maxHP:
+            HP+=1
+            playerY-=1
+            money-=2
+
 
     if playerX > worldWidth:
         playerX = worldWidth
